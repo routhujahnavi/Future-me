@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FutureMe — Meet the version of you who already made it.</title>
+    <style>
+        /* --- Premium Apple & AI Design Aesthetics --- */
+        :root {
+            --bg-base: #030303;
+            --bg-surface: rgba(18, 18, 18, 0.6);
+            --bg-surface-glow: rgba(255, 255, 255, 0.03);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(122, 92, 250, 0.3);
+            
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
+            --text-tertiary: #6e6e73;
+            
+            --accent-primary: #7a5cfa;
+            --accent-secondary: #4299e1;
+            --accent-gradient: linear-gradient(135deg, #7a5cfa 0%, #4299e1 100%);
+            --text-gradient: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%);
+            
+            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            font-family: var(--font-stack);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* --- Ambient Background Orbs --- */
+        .orb-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.15;
+            mix-blend-mode: screen;
+        }
+
+        .orb-1 {
+            top: -10%;
+            right: 10%;
+            width: 600px;
+            height: 600px;
+            background: var(--accent-gradient);
+            animation: float 12s ease-in-out infinite alternate;
+        }
+
+        .orb-2 {
+            top: 40%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #4299e1 0%, transparent 80%);
+            animation: float 18s ease-in-out infinite alternate-reverse;
+        }
+
+        .orb-3 {
+            bottom: 5%;
+            right: -5%;
+            width: 550px;
+            height: 550px;
+            background: radial-gradient(circle, #7a5cfa 0%, transparent 80%);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(40px) scale(1.05); }
+        }
+
+        /* --- Scroll Reveal Pattern --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Shared Premium UI Components --- */
+        .glass-card {
+            background: var(--bg-surface);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            transition: var(--transition-smooth);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 14px;
+            border-radius: 100px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-glass);
+            color: var(--text-primary);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            margin-bottom: 24px;
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent-secondary);
+            border-radius: 50%;
+            margin-right: 8px;
+            box-shadow: 0 0 8px var(--accent-secondary);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-decoration: none;
+            outline: none;
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: var(--bg-base);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.12);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-glass);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto 60px auto;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            background: var(--text-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        /* --- Sticky Navigation --- */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(3, 3, 3, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 16px 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            transition: var(--transition-smooth);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding: 120px 40px 100px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .hero-left h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.04em;
+            background: var(--text-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 24px;
+        }
+
+        .hero-left p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 520px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        .hero-right {
+            position: relative;
+        }
+
+        .preview-card {
+            padding: 32px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            position: relative;
+        }
+
+        .preview-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius-lg);
+            padding: 1px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .preview-title {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .preview-body {
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            line-height: 1.5;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            margin-bottom: 32px;
+        }
+
+        .preview-footer {
+            font-size: 0.8rem;
+            color: var(--accent-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* --- Emotional Hook Section --- */
+        .hooks-section {
+            padding: 100px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .hook-card {
+            padding: 40px 32px;
+        }
+
+        .hook-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .hook-card h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .hook-card p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* --- Main App Section --- */
+        .app-section {
+            padding: 100px 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .app-container {
+            padding: 56px;
+            position: relative;
+        }
+
+        /* Glowing Animated Border for Main App */
+        .app-container.glowing::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: var(--radius-lg);
+            padding: 1px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary), var(--accent-primary));
+            background-size: 200% 100%;
+            animation: borderGlow 6s linear infinite;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        @keyframes borderGlow {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 0%; }
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 14px 18px;
+            color: var(--text-primary);
+            font-family: var(--font-stack);
+            font-size: 0.95rem;
+            transition: var(--transition-smooth);
+            outline: none;
+        }
+
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(122, 92, 250, 0.6);
+            box-shadow: 0 0 0 4px rgba(122, 92, 250, 0.15);
+        }
+
+        .form-group textarea {
+            resize: none;
+            height: 100px;
+        }
+
+        /* Loading State Overlay */
+        .loading-overlay {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid rgba(255,255,255,0.05);
+            border-top-color: var(--accent-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Dynamic Result Card Architecture */
+        .result-card {
+            display: none;
+            margin-top: 40px;
+            padding: 48px;
+            background: radial-gradient(circle at top left, rgba(122, 92, 250, 0.08), transparent 40%), var(--bg-surface);
+            border: 1px solid rgba(122, 92, 250, 0.2);
+            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-header {
+            font-size: 0.85rem;
+            color: var(--accent-primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+        }
+
+        .result-message {
+            font-size: 1.35rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+            font-weight: 400;
+            margin-bottom: 36px;
+            border-bottom: 1px solid var(--border-glass);
+            padding-bottom: 32px;
+        }
+
+        .result-section {
+            margin-bottom: 28px;
+        }
+
+        .result-section h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .result-section p, .result-section ol {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .result-section ol {
+            padding-left: 20px;
+        }
+
+        .result-section li {
+            margin-bottom: 6px;
+        }
+
+        .error-msg {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            display: none;
+        }
+
+        /* --- Chat Preview Section --- */
+        .chat-section {
+            padding: 100px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .chat-container {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .chat-bubble {
+            max-width: 75%;
+            padding: 16px 20px;
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        .bubble-user {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-glass);
+            color: var(--text-primary);
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .bubble-future {
+            background: linear-gradient(135deg, rgba(122, 92, 250, 0.15) 0%, rgba(66, 153, 235, 0.15) 100%);
+            border: 1px solid rgba(122, 92, 250, 0.2);
+            color: var(--text-primary);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .chat-input-container {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        .chat-input-container input {
+            flex-grow: 1;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 14px 18px;
+            color: var(--text-primary);
+            font-family: var(--font-stack);
+            font-size: 0.95rem;
+            outline: none;
+            transition: var(--transition-smooth);
+        }
+        
+        .chat-input-container input:focus {
+            border-color: rgba(122, 92, 250, 0.6);
+            box-shadow: 0 0 0 4px rgba(122, 92, 250, 0.15);
+        }
+        
+        .typing-indicator {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 8px;
+            display: none;
+            align-items: center;
+            gap: 6px;
+            align-self: flex-start;
+        }
+        
+        .typing-dot {
+            width: 4px;
+            height: 4px;
+            background: var(--text-secondary);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+        
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-4px); }
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-glass);
+            flex-wrap: wrap;
+        }
+
+        /* --- Daily Plan Checklists --- */
+        .plan-card {
+            margin-top: 40px;
+            padding: 48px;
+            background: linear-gradient(180deg, rgba(23, 23, 23, 0.4) 0%, var(--bg-surface) 100%);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            display: none;
+            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            margin-bottom: 12px;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .checklist-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(122, 92, 250, 0.3);
+        }
+
+        .checklist-item.checked {
+            opacity: 0.6;
+        }
+        
+        .checklist-item.checked .checkbox {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+        }
+
+        .checklist-item.checked .checkbox::after {
+            content: '';
+            position: absolute;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -60%) rotate(45deg);
+        }
+
+        .checklist-item.checked .task-text {
+            text-decoration: line-through;
+            color: var(--text-tertiary);
+        }
+
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            border: 2px solid var(--text-secondary);
+            border-radius: 6px;
+            position: relative;
+            transition: var(--transition-smooth);
+        }
+
+        .task-text {
+            font-size: 1rem;
+            color: var(--text-primary);
+            line-height: 1.5;
+            transition: var(--transition-smooth);
+        }
+
+        /* --- AI Capabilities Section --- */
+        .hack-section {
+            padding: 100px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .glow-panel {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.0) 100%), var(--bg-surface);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            padding: 64px;
+            position: relative;
+            box-shadow: 0 0 50px rgba(122, 92, 250, 0.05);
+        }
+
+        .hack-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .hack-card {
+            background: rgba(23, 23, 23, 0.4);
+            border: 1px solid rgba(255,255,255,0.03);
+            border-radius: var(--radius-md);
+            padding: 32px;
+        }
+
+        .hack-card h4 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            letter-spacing: -0.01em;
+        }
+
+        .hack-card p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* --- Final Dopamine Section --- */
+        .dopamine-section {
+            padding: 140px 40px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .dopamine-section h2 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            background: var(--text-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .dopamine-section p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        /* --- Toast Notification System --- */
+        .toast {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            background: #1c1c1e;
+            border: 1px solid var(--border-glass);
+            color: var(--text-primary);
+            padding: 14px 24px;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition-smooth);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast-icon {
+            color: #34c759;
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+        }
+
+        /* --- Responsive Logic --- */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 60px;
+                text-align: center;
+                padding-top: 60px;
+            }
+            .hero-left p {
+                margin: 0 auto 40px auto;
+            }
+            .hero-actions {
+                justify-content: center;
+            }
+            .grid-3, .hack-grid {
+                grid-template-columns: 1fr;
+            }
+            .glow-panel {
+                padding: 40px 24px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hero-left h1 {
+                font-size: 2.8rem;
+            }
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            .app-container {
+                padding: 32px 20px;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            .dopamine-section h2 {
+                font-size: 2.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="orb-container">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">Future<span>Me</span></a>
+            <div class="nav-links">
+                <a href="#how-it-works">How it works</a>
+                <a href="#create">Create</a>
+                <a href="#chat">Chat</a>
+                <a href="#ai-hack">AI Hack</a>
+            </div>
+            <a href="#create" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.85rem;">Start Now</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-left reveal">
+            <div class="badge">
+                <div class="badge-dot"></div>
+                Built to elevate your potential
+            </div>
+            <h1>Meet the version of you who already made it.</h1>
+            <p>FutureMe helps you reflect, plan, and receive advice from the person you are becoming.</p>
+            <div class="hero-actions">
+                <a href="#create" class="btn btn-primary">Create My FutureMe</a>
+                <a href="#how-it-works" class="btn btn-secondary">See How It Works</a>
+            </div>
+        </div>
+        <div class="hero-right reveal" style="transition-delay: 0.2s;">
+            <div class="glass-card preview-card">
+                <div class="preview-header">
+                    <span class="preview-title">Message from Future You</span>
+                    <span>Identity Match 99.4%</span>
+                </div>
+                <div class="preview-body">
+                    “You are closer than you think. But your current habits need to match your future identity.”
+                </div>
+                <div class="preview-footer">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M6 3V6L8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    FutureMe generated • 4 seconds ago
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="how-it-works" class="hooks-section reveal">
+        <div class="section-header">
+            <div class="badge">AI Reflection</div>
+            <h2>Designed for honest alignment.</h2>
+            <p>SaaS frameworks solve software; FutureMe solves your core operating system.</p>
+        </div>
+        <div class="grid-3">
+            <div class="glass-card hook-card">
+                <h3 style="color: var(--accent-secondary);">Your goals</h3>
+                <p>Tell FutureMe what you want to become. Quantify the reality you are pulling down to the present.</p>
+            </div>
+            <div class="glass-card hook-card">
+                <h3 style="color: var(--accent-primary);">Your fears</h3>
+                <p>Be honest about what is stopping you. Lay out the architectural flaws in your execution.</p>
+            </div>
+            <div class="glass-card hook-card">
+                <h3 style="color: #e2e8f0;">Your next move</h3>
+                <p>Get a clear message from your future self. Pure, actionable insights unclouded by today's stress.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="create" class="app-section reveal">
+        <div class="section-header">
+            <div class="badge">Personal Growth Engine</div>
+            <h2>Construct Identity Matrix</h2>
+            <p>Feed the protocol your real parameters. Fake data yields fragile advice.</p>
+        </div>
+
+        <div class="glass-card app-container glowing">
+            <form id="futureForm" onsubmit="generateIdentity(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="userName">Your Name</label>
+                        <input type="text" id="userName" placeholder="Your Name" required>
+                        <div class="error-msg" id="err-userName">Please provide your name.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="userAge">Your Current Age</label>
+                        <input type="number" id="userAge" placeholder="28" required min="1" max="120">
+                        <div class="error-msg" id="err-userAge">Please enter a valid age.</div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="userGoal">Your Dream / Goal</label>
+                        <input type="text" id="userGoal" placeholder="Building a multi-million dollar tech startup from scratch" required>
+                        <div class="error-msg" id="err-userGoal">This parameter is crucial to target your timeline.</div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="userStruggle">What are you struggling with right now?</label>
+                        <textarea id="userStruggle" placeholder="Procrastination, overthinking every step, and lack of clarity on execution." required></textarea>
+                        <div class="error-msg" id="err-userStruggle">Exposing friction layers permits exact countermeasure generation.</div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="userTarget">Where do you want to be in 1 year?</label>
+                        <input type="text" id="userTarget" placeholder="Launched, profitable, and executing with an automated team" required>
+                        <div class="error-msg" id="err-userTarget">Define your checkpoint metrics.</div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="futureTone">Choose your FutureMe tone</label>
+                        <select id="futureTone" required>
+                            <option value="Motivational">Motivational</option>
+                            <option value="Brutally Honest">Brutally Honest</option>
+                            <option value="Calm Mentor">Calm Mentor</option>
+                            <option value="CEO Mode">CEO Mode</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;" id="generateBtn">Generate My FutureMe</button>
+            </form>
+
+            <div class="loading-overlay" id="loadingState">
+                <div class="spinner"></div>
+                <div class="loading-text" id="loadingText">Creating your future identity…</div>
+            </div>
+
+            <div class="glass-card result-card" id="resultContainer">
+                <div class="result-header">Matrix Computation Successful</div>
+                <div class="result-message" id="resMessage"></div>
+                
+                <div class="result-section">
+                    <h4>Your Future Identity</h4>
+                    <p id="resIdentity"></p>
+                </div>
+                
+                <div class="result-section">
+                    <h4>Your Next 3 Moves</h4>
+                    <ol id="resMoves"></ol>
+                </div>
+                
+                <div class="result-section">
+                    <h4>One Habit to Start Today</h4>
+                    <p id="resHabit"></p>
+                </div>
+
+                <div class="result-section">
+                    <h4>Warning from Future You</h4>
+                    <p id="resWarning" style="color: #ef4444;"></p>
+                </div>
+
+                <div class="result-section" style="margin-bottom: 0;">
+                    <h4>Daily Mantra</h4>
+                    <p id="resMantra" style="font-style: italic; color: var(--accent-secondary);"></p>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" onclick="copyResult()">Copy Result</button>
+                    <button class="btn btn-secondary" onclick="location.reload()">Regenerate</button>
+                    <button class="btn btn-primary" onclick="generateDailyPlan()" id="planBtn">Generate Daily Plan</button>
+                    <button class="btn btn-primary" onclick="showChat()">Start Chat with FutureMe</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="dailyPlanSection" class="app-section reveal" style="display: none; padding-top: 40px;">
+        <div class="section-header">
+            <div class="badge">Execution Protocol</div>
+            <h2>Your Daily Operating System.</h2>
+            <p>Ideas without execution are hallucinations. Here is the exact path.</p>
+        </div>
+        
+        <div class="glass-card plan-card" id="planCard" style="display:block;">
+            <div class="result-header">Daily Action Matrix</div>
+            <div class="result-message" id="planIntro" style="font-style: italic; color: var(--accent-secondary); border-bottom: none; padding-bottom: 16px; margin-bottom: 24px;"></div>
+            
+            <div class="result-section">
+                <h4>Morning Alignment</h4>
+                <div id="planMorning"></div>
+            </div>
+            
+            <div class="result-section">
+                <h4>Deep Work Blocks</h4>
+                <div id="planDeepWork"></div>
+            </div>
+            
+            <div class="result-section" style="margin-bottom: 32px;">
+                <h4>Evening Wind Down</h4>
+                <div id="planEvening"></div>
+            </div>
+
+            <div class="result-section" style="margin-bottom: 0; border-top: 1px solid var(--border-glass); padding-top: 32px;">
+                <h4>Closing Thought</h4>
+                <p id="planClosing" style="font-weight: 600; color: var(--text-primary);"></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="chat" class="chat-section reveal" style="display: none;">
+        <div class="section-header">
+            <div class="badge">Live Interface Preview</div>
+            <h2>Ask your future self anything.</h2>
+            <p>Continuous dynamic reflection loops bypass self-sabotaging cognitive biases.</p>
+        </div>
+        <div class="glass-card chat-container">
+            <div id="chatHistoryBox" style="display:flex; flex-direction:column; gap:24px; max-height: 400px; overflow-y:auto; padding-right:8px;">
+                <!-- Chat history populated dynamically -->
+            </div>
+            
+            <div class="typing-indicator" id="typingIndicator">
+                FutureMe is typing <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
+            </div>
+
+            <div class="chat-input-container">
+                <input type="text" id="chatInput" placeholder="Ask your FutureMe anything..." onkeypress="handleChatEnter(event)">
+                <button class="btn btn-primary" onclick="sendMessage()" id="sendBtn">Send</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="ai-hack" class="hack-section reveal">
+        <div class="glow-panel">
+            <div class="badge" style="background: rgba(122, 92, 250, 0.1); border-color: var(--border-glow);">Live Build Paradigm</div>
+            <h3 style="font-size: 2.2rem; font-weight: 700; letter-spacing: -0.03em;">Powered by Advanced AI</h3>
+            <p style="color: var(--text-secondary); margin-top: 8px; max-width: 600px;">Engineered systems architecture to optimize Prompting Paradigms under real operational constraints.</p>
+            
+            <div class="hack-grid">
+                <div class="hack-card">
+                    <h4>Identity Prompting</h4>
+                    <p>Don’t ask AI what to do. Ask it to respond as the future version of you who already solved the problem.</p>
+                </div>
+                <div class="hack-card">
+                    <h4>Constraint Prompting</h4>
+                    <p>Add limits like time, budget, energy, and skill level to get practical answers instead of abstract platitudes.</p>
+                </div>
+                <div class="hack-card">
+                    <h4>Reverse Fear Prompting</h4>
+                    <p>Ask AI what mistake your future self would warn you about today given your current behavior profiles.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="dopamine-section reveal">
+        <h2>You did not just build a page. You built a mirror.</h2>
+        <p>FutureMe turns AI from a tool into a personal growth experience.</p>
+        <button class="btn btn-primary" onclick="triggerToast('Your FutureMe is ready to share.')">Share My FutureMe</button>
+    </section>
+
+    <div class="toast" id="shareToast">
+        <svg class="toast-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        <span id="toastMessage">Your FutureMe moment is ready to share.</span>
+    </div>
+
+    <footer>
+        <p>FutureMe Application</p>
+    </footer>
+
+    <script>
+        // --- Globals ---
+        let userProfile = null;
+        let chatHistory = [];
+        // Use relative URL for Netlify, absolute for local dev
+        const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:' ? 'http://localhost:5001/api' : '/api';
+
+        // --- Intersection Observer for Premium Scroll Reveal ---
+        const revealElements = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => observer.observe(el));
+
+        // --- Core Application Generation Matrix Engine ---
+        async function generateIdentity(event) {
+            event.preventDefault();
+
+            // Form inputs
+            const name = document.getElementById('userName').value.trim();
+            const age = parseInt(document.getElementById('userAge').value);
+            const goal = document.getElementById('userGoal').value.trim();
+            const struggle = document.getElementById('userStruggle').value.trim();
+            const target = document.getElementById('userTarget').value.trim();
+            const tone = document.getElementById('futureTone').value;
+
+            // Form validation routine
+            let valid = true;
+            ['userName', 'userAge', 'userGoal', 'userStruggle', 'userTarget'].forEach(fieldId => {
+                const input = document.getElementById(fieldId);
+                const error = document.getElementById('err-' + fieldId);
+                if(!input.value.trim()) {
+                    error.style.display = 'block';
+                    valid = false;
+                } else {
+                    error.style.display = 'none';
+                }
+            });
+
+            if(!valid) return;
+
+            // Save user profile for chat
+            userProfile = {
+                name,
+                age,
+                goal,
+                struggle,
+                oneYearVision: target,
+                tone
+            };
+
+            // Interface States
+            const generateBtn = document.getElementById('generateBtn');
+            const loading = document.getElementById('loadingState');
+            const result = document.getElementById('resultContainer');
+            const loadingText = document.getElementById('loadingText');
+            
+            result.style.display = 'none';
+            loading.style.display = 'flex';
+            generateBtn.disabled = true;
+            loadingText.innerText = 'Creating your future identity...';
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/generate-futureme`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(userProfile)
+                });
+
+                const json = await response.json();
+
+                if (!json.success) {
+                    throw new Error(json.error || 'Failed to generate FutureMe');
+                }
+
+                const data = json.data;
+
+                // Render compiled assets into UI
+                document.getElementById('resMessage').innerText = data.message;
+                document.getElementById('resIdentity').innerText = data.futureIdentity;
+                
+                const movesList = document.getElementById('resMoves');
+                movesList.innerHTML = "";
+                if (data.nextMoves && Array.isArray(data.nextMoves)) {
+                    data.nextMoves.forEach(move => {
+                        const li = document.createElement('li');
+                        li.innerText = move;
+                        movesList.appendChild(li);
+                    });
+                }
+
+                document.getElementById('resHabit').innerText = data.habit;
+                document.getElementById('resWarning').innerText = data.warning;
+                document.getElementById('resMantra').innerText = `"${data.mantra}"`;
+                
+                loading.style.display = 'none';
+                result.style.display = 'block';
+
+                // Setup initial chat message from FutureMe based on result
+                chatHistory.push({ role: 'futureme', message: data.message });
+
+                // Automatically scroll down to the generated dynamic result card safely
+                result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } catch (err) {
+                loading.style.display = 'none';
+                alert(err.message || "FutureMe could not respond right now. Try again.");
+                console.error(err);
+            } finally {
+                generateBtn.disabled = false;
+            }
+        }
+
+        function showChat() {
+            const chatSection = document.getElementById('chat');
+            chatSection.style.display = 'block';
+            chatSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            // Populate initial history if empty visually
+            const chatBox = document.getElementById('chatHistoryBox');
+            chatBox.innerHTML = '';
+            
+            chatHistory.forEach(msg => {
+                appendMessageToUI(msg.role, msg.message);
+            });
+        }
+
+        function appendMessageToUI(role, text) {
+            const chatBox = document.getElementById('chatHistoryBox');
+            const bubble = document.createElement('div');
+            bubble.className = `chat-bubble ${role === 'user' ? 'bubble-user' : 'bubble-future'}`;
+            bubble.innerText = text;
+            chatBox.appendChild(bubble);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function handleChatEnter(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const sendBtn = document.getElementById('sendBtn');
+            const typingIndicator = document.getElementById('typingIndicator');
+            const question = input.value.trim();
+            
+            if (!question) return;
+
+            // Update UI with user message
+            input.value = '';
+            input.disabled = true;
+            sendBtn.disabled = true;
+            
+            appendMessageToUI('user', question);
+            typingIndicator.style.display = 'flex';
+            
+            // Update history
+            const requestHistory = [...chatHistory];
+            chatHistory.push({ role: 'user', message: question });
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/chat-futureme`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        userProfile,
+                        chatHistory: requestHistory, // send history prior to current question
+                        question
+                    })
+                });
+
+                const json = await response.json();
+
+                if (!json.success) {
+                    throw new Error(json.error || 'Chat failed');
+                }
+
+                const reply = json.reply;
+                chatHistory.push({ role: 'futureme', message: reply });
+                appendMessageToUI('futureme', reply);
+            } catch (err) {
+                appendMessageToUI('futureme', "FutureMe could not respond right now. Try again.");
+                console.error(err);
+            } finally {
+                typingIndicator.style.display = 'none';
+                input.disabled = false;
+                sendBtn.disabled = false;
+                input.focus();
+            }
+        }
+
+        function copyResult() {
+            const message = document.getElementById('resMessage').innerText;
+            const moves = Array.from(document.getElementById('resMoves').children).map(li => "- " + li.innerText).join('\\n');
+            const mantra = document.getElementById('resMantra').innerText;
+            
+            const textToCopy = `Message from my FutureMe:\\n"${message}"\\n\\nNext Moves:\\n${moves}\\n\\nMantra: ${mantra}`;
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                triggerToast('Result copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+
+        // --- Daily Plan Engine ---
+        function toggleCheck(element) {
+            element.classList.toggle('checked');
+        }
+
+        function createChecklistItem(text) {
+            const item = document.createElement('div');
+            item.className = 'checklist-item';
+            item.onclick = function() { toggleCheck(this); };
+            
+            const checkbox = document.createElement('div');
+            checkbox.className = 'checkbox';
+            
+            const taskText = document.createElement('div');
+            taskText.className = 'task-text';
+            taskText.innerText = text;
+            
+            item.appendChild(checkbox);
+            item.appendChild(taskText);
+            return item;
+        }
+
+        async function generateDailyPlan() {
+            if (!userProfile) return;
+
+            const planBtn = document.getElementById('planBtn');
+            const planSection = document.getElementById('dailyPlanSection');
+            
+            planBtn.disabled = true;
+            planBtn.innerText = "Building Protocol...";
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/generate-daily-plan`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(userProfile)
+                });
+
+                const json = await response.json();
+
+                if (!json.success) {
+                    throw new Error(json.error || 'Failed to generate Daily Plan');
+                }
+
+                const data = json.data;
+
+                document.getElementById('planIntro').innerText = `"${data.motivationalIntro}"`;
+                document.getElementById('planClosing').innerText = `"${data.closingThought}"`;
+                
+                const morningContainer = document.getElementById('planMorning');
+                const deepWorkContainer = document.getElementById('planDeepWork');
+                const eveningContainer = document.getElementById('planEvening');
+                
+                morningContainer.innerHTML = "";
+                deepWorkContainer.innerHTML = "";
+                eveningContainer.innerHTML = "";
+
+                if (data.morningRoutine) {
+                    data.morningRoutine.forEach(task => morningContainer.appendChild(createChecklistItem(task)));
+                }
+                if (data.deepWorkBlocks) {
+                    data.deepWorkBlocks.forEach(task => deepWorkContainer.appendChild(createChecklistItem(task)));
+                }
+                if (data.eveningWindDown) {
+                    data.eveningWindDown.forEach(task => eveningContainer.appendChild(createChecklistItem(task)));
+                }
+
+                planSection.style.display = 'block';
+                planSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } catch (err) {
+                alert(err.message || "Could not generate daily plan right now. Try again.");
+                console.error(err);
+            } finally {
+                planBtn.disabled = false;
+                planBtn.innerText = "Generate Daily Plan";
+            }
+        }
+
+        // --- Dynamic Toast Trigger Interface ---
+        function triggerToast(message) {
+            const toast = document.getElementById('shareToast');
+            const toastMessage = document.getElementById('toastMessage');
+            if (message) {
+                toastMessage.innerText = message;
+            }
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
